@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import CharacterCard from '../CharacterCard';
 
 class CharacterList extends React.Component{
 
@@ -9,9 +10,7 @@ class CharacterList extends React.Component{
             <ul>{
                 characters.map(character =>
                   <li key={character.id} >
-                    <img src={character.image} alt={character.name} />
-                    <h1> {character.name}</h1>
-                    <p>{character.house}</p>
+                    <CharacterCard character = {character} />
                   </li>
                 )}
               </ul>
