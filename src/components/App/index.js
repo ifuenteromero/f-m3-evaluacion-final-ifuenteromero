@@ -2,12 +2,14 @@ import React,{Fragment} from 'react';
 
 import CharacterList from '../CharacterList';
 import './styles.scss';
+import queryApi from '../../services/characters-service';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      characters: []
+      characters: [],
+      isFetching : true
     }
   }
 
@@ -17,9 +19,7 @@ class App extends React.Component {
   }
 
   getData() {
-    fetch('http://hp-api.herokuapp.com/api/characters')
-      .then(response => response.json())
-      .then(data => {
+      queryApi().then(data => {
         this.setState(() => {
           const newData = data.map((item, index) => {
             return {
@@ -30,7 +30,8 @@ class App extends React.Component {
             }
           });
           return {
-            characters: newData
+            characters: newData,
+            isFetching : false
           }
         }
         )
@@ -39,6 +40,7 @@ class App extends React.Component {
 
   render() {
     const { characters } = this.state;
+    const { isFetching } = this.state;
 
     return (
       <Fragment>
@@ -46,7 +48,8 @@ class App extends React.Component {
           <h1>Harry Potter Characters</h1>
         </header>
         <main>
-          <CharacterList characters={characters} />
+          { isFetching ? (<p>holi</p>) :( <CharacterList characters={characters} />)}
+         
         </main>
       </Fragment>
     );
