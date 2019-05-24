@@ -48,7 +48,7 @@ class App extends React.Component {
 
   render() {
     const { characters,filter } = this.state;
-    const filteredCharacters = characters.filter(character => character.name.includes(filter));
+    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
     return (
       <Fragment>
         <header>
