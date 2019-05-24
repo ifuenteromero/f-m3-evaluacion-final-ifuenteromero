@@ -1,14 +1,17 @@
-import React,{Fragment} from 'react';
+import React, { Fragment } from 'react';
 
 import CharacterList from '../CharacterList';
+import Filter from '../Filter';
 import './styles.scss';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      characters: []
+      characters: [],
+      filter : ""
     }
+    this.handleChange = this.handleChange.bind(this);
   }
 
 
@@ -37,16 +40,23 @@ class App extends React.Component {
       })
   }
 
-  render() {
-    const { characters } = this.state;
+  handleChange(event){
+    this.setState({
+      filter : event.target.value
+    })
+  }
 
+  render() {
+    const { characters,filter } = this.state;
+    const filteredCharacters = characters.filter(character => character.name.includes(filter));
     return (
       <Fragment>
         <header>
           <h1>Harry Potter Characters</h1>
         </header>
         <main>
-          <CharacterList characters={characters} />
+          <Filter handleChange = {this.handleChange} value = {filter}/>
+          <CharacterList characters={filteredCharacters} />
         </main>
       </Fragment>
     );
