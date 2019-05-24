@@ -7,7 +7,7 @@ class CharacterCard extends React.Component {
         return (
             <div>
                 <img src={image} alt={name} />
-                <h1> {name}</h1>
+                <h1>{name}</h1>
                 <p>{house}</p>
             </div>
         );
@@ -15,7 +15,12 @@ class CharacterCard extends React.Component {
 }
 
 CharacterCard.propTypes = {
-    character: PropTypes.object
+    character: PropTypes.shape({
+        id : PropTypes.number.isRequired,
+        image : PropTypes.string.isRequired,
+        name : PropTypes.string.isRequired,
+        house : PropTypes.string.isRequired
+    })
 }
 
 export default CharacterCard;

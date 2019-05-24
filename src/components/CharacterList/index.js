@@ -19,7 +19,7 @@ class CharacterList extends React.Component{
 }
 
 CharacterList.propTypes = {
-  characters : PropTypes.arrayOf(PropTypes.object)
+  characters : PropTypes.arrayOf(PropTypes.object.isRequired).isRequired
 }
 
 
