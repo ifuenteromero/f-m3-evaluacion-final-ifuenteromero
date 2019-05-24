@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Fragment} from 'react';
 
 import CharacterList from '../CharacterList';
 import './styles.scss';
@@ -41,14 +41,14 @@ class App extends React.Component {
     const { characters } = this.state;
 
     return (
-      <React.Fragment>
+      <Fragment>
         <header>
           <h1>Harry Potter Characters</h1>
         </header>
         <main>
           <CharacterList characters={characters} />
         </main>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
