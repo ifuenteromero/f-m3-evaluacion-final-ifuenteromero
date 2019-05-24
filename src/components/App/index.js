@@ -3,13 +3,15 @@ import React, { Fragment } from 'react';
 import CharacterList from '../CharacterList';
 import Filter from '../Filter';
 import './styles.scss';
+import CharacterDetail from '../CharacterDetail';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       characters: [],
-      filter : ""
+      filter : "",
+      isFetching : true,
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -30,10 +32,14 @@ class App extends React.Component {
               name: item.name,
               image: item.image,
               house: item.house,
+              dob : item.yearOfBirth,
+              patronus : item.patronus,
+              alive : item.alive
             }
           });
           return {
-            characters: newData
+            characters: newData,
+            isFetching : false
           }
         }
         )
@@ -56,7 +62,9 @@ class App extends React.Component {
         </header>
         <main>
           <Filter handleChange = {this.handleChange} value = {filter}/>
+          <CharacterDetail characters = {characters}  />
           <CharacterList characters={filteredCharacters} />
+        
         </main>
       </Fragment>
     );
