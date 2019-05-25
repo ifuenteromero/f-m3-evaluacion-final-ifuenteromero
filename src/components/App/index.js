@@ -64,7 +64,7 @@ class App extends React.Component {
       return (
         <Fragment>
           <header>
-            <h1>Harry Potter Characters</h1>
+            <h1 className="main__title">Harry Potter Characters</h1>
           </header>
           <main>
             <Switch>

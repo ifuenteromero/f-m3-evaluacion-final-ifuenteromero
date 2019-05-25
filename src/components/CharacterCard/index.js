@@ -1,18 +1,29 @@
-import React ,{Fragment} from 'react';
+import React  from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import './styles.scss';
 
 const CharacterCard = props => {
-    const { id, name, image, house } = props.character;
+    const { name, image, house } = props.character;
+
     return (
-        <Fragment>
-        <div>
-            <img src={image} alt={name} />
-            <h1>{name}</h1>
-            <p>{house}</p>
+        <div className="card-link__container">
+        <div className="card__container">
+            <div className="card-image__container">
+            <img className="card__image" src={image} alt={name} />
+            </div>
+            <div className="card-title__container">
+            <h1 className="card__title">{name}</h1>
+            </div>
+            <div className="card-house__container">
+            <i className="fas fa-dungeon"></i>
+            <p className="card-house">{house ||'Homeless'}</p>
+            </div>
         </div>
-        <Link to = {`character/${name}`}>más info</Link>
-        </Fragment>
+        <div className="link-container">
+        <Link className="card__link" to = {`character/${name}`}>More info</Link>
+        </div>
+       </div>
         
     );
 }
