@@ -83,7 +83,7 @@ class App extends React.Component {
                 )}
               />
               <Route
-                path="/card/:id"
+                path="/character/:name"
                 render={(routerProps) => (
                   <CharacterDetail match={routerProps.match} characters={characters} />
                 )}

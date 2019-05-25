@@ -11,7 +11,7 @@ const CharacterCard = props => {
             <h1>{name}</h1>
             <p>{house}</p>
         </div>
-        <Link to = {`card/${id}`}>más info</Link>
+        <Link to = {`character/${name}`}>más info</Link>
         </Fragment>
         
     );
