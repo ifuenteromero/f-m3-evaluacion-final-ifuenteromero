@@ -7,8 +7,7 @@
 }
 
 .card__image {
-  height: 100%;
-  border-radius: 5px;
+  
 }
 
 .card__link {
@@ -33,7 +32,7 @@
   background-color: #fff;
   border-radius: 0.5rem;
   border: 0.05rem solid gray;
-  padding: 10px 0;
+  padding: 5px 5px 10px 5px;
 }
 
 .card__title {
@@ -61,7 +60,10 @@
   padding: 0 27px;
 }
 .card-image__container {
-  height: 75%;
+    height: 75%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
 }
 .link-container {
   height: 10%;
