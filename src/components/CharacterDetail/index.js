@@ -2,19 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types'
 
 class CharacterDetail extends React.Component{
-    constructor(props){
-        super(props);
-
-    }
+   
     
     render(){
         const {characters} = this.props;
-        if(characters[0]!==undefined){
-            const {name, id,image,house,dob,patronus,alive} = characters[0];
+        console.log(characters[0].name);
+       
+            const {name, id,image,house,dob,patronus,alive} = characters[2];
             const isAlive = alive ? 'vivo' :'muerto'
             return (
-            <div>
-                <img src = {image} />
+            <div data-id ={id}>
+                <img src = {image} alt ={name} />
                 <h1>{name}</h1>
                 <p>{house}</p>
                 <p>{dob}</p>
@@ -23,22 +21,16 @@ class CharacterDetail extends React.Component{
       
              </div>)
         }
-       else {
-        return (         
-            <div>
-               <p>holi</p>
-            </div>
-          )
-       }
+      
         
-    }
+    
 
 }
-// CharacterDetail.propTypes = {
-//     characters : PropTypes.arrayOf(PropTypes.object),
-//     id : PropTypes.number
+CharacterDetail.propTypes = {
+    characters : PropTypes.arrayOf(PropTypes.object),
+    id : PropTypes.number
 
-// }
+}
 export default CharacterDetail;
 
 

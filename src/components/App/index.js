@@ -21,15 +21,16 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    this.getData();
+    this.getCharacters();
   }
  
-  getData() {
+  getCharacters() {
     queryApi().then(data =>
       this.setState(() => {
         const dataCleaned = data.map((character, index) => {
+
           return {
-            id: character.index+1,
+            id: index+1,
             name: character.name,
             image: character.image,
             house: character.house,
@@ -57,6 +58,8 @@ class App extends React.Component {
   render() {
     const { characters, filter } = this.state;
    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
+   if (this.state.isFetching) {return (<p>loading</p>)}
+   else{
     return (
       <Fragment>
         <header>
@@ -69,7 +72,9 @@ class App extends React.Component {
 
         </main>
       </Fragment>
+      
     );
+  }
   }
 }
 
