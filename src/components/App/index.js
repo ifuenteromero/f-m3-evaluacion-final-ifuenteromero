@@ -9,7 +9,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       characters: [],
-      isFetching : true
     }
   }
 
@@ -31,7 +30,6 @@ class App extends React.Component {
           });
           return {
             characters: newData,
-            isFetching : false
           }
         }
         )
