@@ -1,10 +1,13 @@
 import React from 'react';
+import {Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 
 
 const CharacterDetail = props => {
-    const { characters } = props;
-    const { name, id, image, house, dob, patronus, alive } = characters[2];
+    const { characters,match } = props;
+    const routerId = match.params.id;
+    const index = routerId-1;
+    const { name, id, image, house, dob, patronus, alive } = characters[index];
     const isAlive = alive ? 'alive' : 'dead'
     return (
         <div data-id={id}>
@@ -14,6 +17,8 @@ const CharacterDetail = props => {
             <p>{dob}</p>
             <p>{patronus}</p>
             <p>{isAlive}</p>
+            <Link to ="/">Volver</Link>
+
         </div>
     )
 

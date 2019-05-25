@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Switch, Route } from 'react-router-dom';
 
 import queryApi from '../../services/characters-service';
 
@@ -56,7 +57,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { characters, filter ,isFetching} = this.state;
+    const { characters, filter, isFetching } = this.state;
     const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
     if (isFetching) { return (<p>loading</p>) }
     else {
@@ -66,10 +67,28 @@ class App extends React.Component {
             <h1>Harry Potter Characters</h1>
           </header>
           <main>
-            <Filter handleChange={this.handleChange} value={filter} />
-            <CharacterDetail characters={characters} />
-            <CharacterList characters={filteredCharacters} />
-
+            <Switch>
+              <Route
+                exact path="/"
+                render={() => (
+                  <Fragment>
+                    <Filter
+                      handleChange={this.handleChange}
+                      value={filter}
+                    />
+                    <CharacterList
+                      characters={filteredCharacters}
+                    />
+                  </Fragment>
+                )}
+              />
+              <Route
+                path="/card/:id"
+                render={(routerProps) => (
+                  <CharacterDetail match={routerProps.match} characters={characters} />
+                )}
+              />
+            </Switch>
           </main>
         </Fragment>
 

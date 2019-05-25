@@ -1,14 +1,19 @@
-import React from 'react';
+import React ,{Fragment} from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const CharacterCard = props => {
-    const { name, image, house } = props.character;
+    const { id, name, image, house } = props.character;
     return (
+        <Fragment>
         <div>
             <img src={image} alt={name} />
             <h1>{name}</h1>
             <p>{house}</p>
         </div>
+        <Link to = {`card/${id}`}>más info</Link>
+        </Fragment>
+        
     );
 }
 
