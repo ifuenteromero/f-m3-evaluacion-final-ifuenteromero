@@ -13,7 +13,7 @@ class App extends React.Component {
     this.state = {
       characters: [],
       filter: "",
-      isFetching :true,
+      isFetching: true,
 
     }
     this.handleChange = this.handleChange.bind(this);
@@ -23,14 +23,14 @@ class App extends React.Component {
   componentDidMount() {
     this.getCharacters();
   }
- 
+
   getCharacters() {
     queryApi().then(data =>
       this.setState(() => {
         const dataCleaned = data.map((character, index) => {
 
           return {
-            id: index+1,
+            id: index + 1,
             name: character.name,
             image: character.image,
             house: character.house,
@@ -40,10 +40,10 @@ class App extends React.Component {
           }
 
         });
-      
+
         return {
           characters: dataCleaned,
-          isFetching : false
+          isFetching: false
         }
       }))
   }
@@ -56,25 +56,25 @@ class App extends React.Component {
   }
 
   render() {
-    const { characters, filter } = this.state;
-   const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
-   if (this.state.isFetching) {return (<p>loading</p>)}
-   else{
-    return (
-      <Fragment>
-        <header>
-          <h1>Harry Potter Characters</h1>
-        </header>
-        <main>
-          <Filter handleChange={this.handleChange} value={filter} />
-          <CharacterDetail characters={characters} />
-          <CharacterList characters={filteredCharacters} />
+    const { characters, filter ,isFetching} = this.state;
+    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
+    if (isFetching) { return (<p>loading</p>) }
+    else {
+      return (
+        <Fragment>
+          <header>
+            <h1>Harry Potter Characters</h1>
+          </header>
+          <main>
+            <Filter handleChange={this.handleChange} value={filter} />
+            <CharacterDetail characters={characters} />
+            <CharacterList characters={filteredCharacters} />
 
-        </main>
-      </Fragment>
-      
-    );
-  }
+          </main>
+        </Fragment>
+
+      );
+    }
   }
 }
 
