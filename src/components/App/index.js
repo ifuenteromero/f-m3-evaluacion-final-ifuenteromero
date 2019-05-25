@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react';
 
+import queryApi from '../../services/characters-service';
+
 import CharacterList from '../CharacterList';
 import Filter from '../Filter';
 import './styles.scss';
@@ -10,8 +12,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       characters: [],
-      filter : "",
-      isFetching : true,
+      filter: "",
+      isFetching :true,
+
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -20,51 +23,50 @@ class App extends React.Component {
   componentDidMount() {
     this.getData();
   }
-
+ 
   getData() {
-    fetch('http://hp-api.herokuapp.com/api/characters')
-      .then(response => response.json())
-      .then(data => {
-        this.setState(() => {
-          const newData = data.map((item, index) => {
-            return {
-              id: index + 1,
-              name: item.name,
-              image: item.image,
-              house: item.house,
-              dob : item.yearOfBirth,
-              patronus : item.patronus,
-              alive : item.alive
-            }
-          });
+    queryApi().then(data =>
+      this.setState(() => {
+        const dataCleaned = data.map((character, index) => {
           return {
-            characters: newData,
-            isFetching : false
+            id: character.index+1,
+            name: character.name,
+            image: character.image,
+            house: character.house,
+            dob: character.yearOfBirth,
+            patronus: character.patronus,
+            alive: character.alive
           }
+
+        });
+      
+        return {
+          characters: dataCleaned,
+          isFetching : false
         }
-        )
-      })
+      }))
   }
 
-  handleChange(event){
+
+  handleChange(event) {
     this.setState({
-      filter : event.target.value
+      filter: event.target.value
     })
   }
 
   render() {
-    const { characters,filter } = this.state;
-    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
+    const { characters, filter } = this.state;
+   const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
     return (
       <Fragment>
         <header>
           <h1>Harry Potter Characters</h1>
         </header>
         <main>
-          <Filter handleChange = {this.handleChange} value = {filter}/>
-          <CharacterDetail characters = {characters}  />
+          <Filter handleChange={this.handleChange} value={filter} />
+          <CharacterDetail characters={characters} />
           <CharacterList characters={filteredCharacters} />
-        
+
         </main>
       </Fragment>
     );
