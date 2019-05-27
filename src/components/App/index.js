@@ -1,12 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import queryApi from '../../services/characters-service';
 
-import CharacterList from '../CharacterList';
-import Filter from '../Filter';
-import './styles.scss';
+import Home from '../Home';
 import CharacterDetail from '../CharacterDetail';
+
+import './styles.scss';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -20,7 +21,6 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-
   componentDidMount() {
     this.getCharacters();
   }
@@ -29,7 +29,6 @@ class App extends React.Component {
     queryApi().then(data =>
       this.setState(() => {
         const dataCleaned = data.map((character, index) => {
-
           return {
             id: index + 1,
             name: character.name,
@@ -39,7 +38,6 @@ class App extends React.Component {
             patronus: character.patronus,
             alive: character.alive
           }
-
         });
 
         return {
@@ -48,7 +46,6 @@ class App extends React.Component {
         }
       }))
   }
-
 
   handleChange(event) {
     this.setState({
@@ -62,40 +59,22 @@ class App extends React.Component {
     if (isFetching) { return (<p>loading</p>) }
     else {
       return (
-        <Fragment>
+        <Switch>
+          <Route
+            exact path="/"
+            render={() => (
+              <Home filter={filter} handleChange={this.handleChange}
+                filteredCharacters={filteredCharacters} />
 
-
-          <Switch>
-            <Route
-              exact path="/"
-              render={() => (
-             
-                  <div className="page--characters">
-                  <header>
-                    <h1 className="main__title">Harry Potter Characters</h1>
-                  </header>
-                  <main>
-                    <Filter
-                      handleChange={this.handleChange}
-                      value={filter}
-                    />
-                    <CharacterList
-                      characters={filteredCharacters}
-                    />
-                  </main>
-                  </div>
-              )}
-            />
-            <Route
-              path="/character/:name"
-              render={(routerProps) => (
-                <CharacterDetail match={routerProps.match} characters={characters} />
-              )}
-            />
-          </Switch>
-
-        </Fragment>
-
+            )}
+          />
+          <Route
+            path="/character/:name"
+            render={(routerProps) => (
+              <CharacterDetail match={routerProps.match} characters={characters} />
+            )}
+          />
+        </Switch>
       );
     }
   }
