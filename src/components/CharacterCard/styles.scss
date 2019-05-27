@@ -6,10 +6,6 @@
   color: black;
 }
 
-.card__image {
-  
-}
-
 .card__link {
   background-color: #065a5c;
   text-decoration: none;
@@ -60,10 +56,10 @@
   padding: 0 27px;
 }
 .card-image__container {
-    height: 75%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top;
+  height: 75%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
 }
 .link-container {
   height: 10%;

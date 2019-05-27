@@ -8,7 +8,6 @@ import CharacterDetail from '../CharacterDetail';
 
 import './styles.scss';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +15,6 @@ class App extends React.Component {
       characters: [],
       filter: "",
       isFetching: true,
-
     }
     this.handleChange = this.handleChange.bind(this);
   }

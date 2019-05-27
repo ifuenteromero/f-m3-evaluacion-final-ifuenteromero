@@ -5,7 +5,6 @@ import CharacterList from '../CharacterList';
 
 import './styles.scss';
 
-
 const Home = props => {
     const { handleChange, filter, filteredCharacters } = props;
     return (
@@ -24,7 +23,6 @@ const Home = props => {
             </main>
         </div>
     );
-
 }
 
 export default Home;

@@ -1,7 +1,9 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import './styles.scss';
+
 import aliveIcon from '../../images/alive.ico';
 import deadIcon from '../../images/dead.ico';
 
@@ -9,15 +11,14 @@ const CharacterDetail = props => {
     const { characters, match } = props;
     const urlName = match.params.name;
     const characterIndex = characters.findIndex(character => character.name === urlName);
-    console.log(characterIndex);
     if (characterIndex === -1) {
-        return (<Fragment><p>no hay</p>
-            <Link to="/">Volver a la página principal</Link></Fragment>)
+        return (<Fragment><p> Characters not found</p>
+            <Link className="btn--back" to="/"> Back to homepage</Link></Fragment>)
     }
     else {
         const { name, id, image, house, dob, patronus, alive } = characters[characterIndex];
         const isAlive = alive ? 'alive' : 'dead';
-        const lifeIcon = alive ? aliveIcon : deadIcon ;
+        const lifeIcon = alive ? aliveIcon : deadIcon;
         return (
             < div className="page--detail">
                 <div className="card-detail__container" id={id}>
@@ -32,21 +33,20 @@ const CharacterDetail = props => {
                         </div>
 
                         <p className="detail-data">{`Date of birth: ${dob}`}</p>
-                        <p className="detail-data">{`Patronus: ${patronus||'unknown'}`}</p>
+                        <p className="detail-data">{`Patronus: ${patronus || 'unknown'}`}</p>
                         <div className="detail-life__container">
-                        <img className ="icon--life" src ={lifeIcon} alt={isAlive}></img>
-                        <p className="detail__life detail-data">{isAlive}</p>
-                        
+                            <img className="icon--life" src={lifeIcon} alt={isAlive}></img>
+                            <p className="detail__life detail-data">{isAlive}</p>
+
                         </div>
                         <div className="btn--back__container">
-                        <Link to="/" className="btn--back" >Back</Link>
+                            <Link to="/" className="btn--back" >Back</Link>
                         </div>
                     </div>
                 </div>
             </div>
         )
     }
-
 }
 
 CharacterDetail.propTypes = {
