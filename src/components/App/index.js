@@ -13,20 +13,22 @@ class App extends React.Component {
     super(props);
     this.state = {
       characters: [],
-     
+
       isFetching: true,
-      filters :{
-        filterName : "",
-        filterLife : true
+      filters: {
+        filterName: "",
+        filterLife: true
       }
-      
+
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeLife = this.handleChangeLife.bind(this);
+    this.handleReset=this.handleReset.bind(this);
   }
 
   componentDidMount() {
     this.getCharacters();
+    console.log('el componente se ha montado');
   }
 
   getCharacters() {
@@ -52,38 +54,53 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({
-      filterName: event.target.value
-    })
-  }
-  handleChangeLife(event){
-    const nextFilterLife = event.currentTarget.value ==="true";
-    this.setState( prevState =>{
-   
-      return{
+    const nameInputValue = event.currentTarget.value;
+    this.setState(prevState=>{
+     
+      return {
         filters :{
           ...prevState.filters,
-          filterLife : nextFilterLife
+          filterName : nameInputValue
+        }
+      }
+
+    })
+  }
+  handleChangeLife(event) {
+    const nextFilterLife = event.currentTarget.value === "true";
+    this.setState(prevState => {
+
+      return {
+        filters: {
+          ...prevState.filters,
+          filterLife: nextFilterLife
         }
       }
 
     }
-      
-    //   {
-    //   filterLife:event.currentTarget.value==="true"
-    // }
-    
-    
+
+      //   {
+      //   filterLife:event.currentTarget.value==="true"
+      // }
+
+
     )
+  }
+  handleReset(){
+    this.setState({
+      filters: {
+        filterName: "",
+        filterLife: true
+      }
+    })
   }
 
   render() {
-    const { characters, filter, isFetching } = this.state;
+    const { characters, filters, isFetching } = this.state;
     const filteredCharLife = characters.filter(
-      character =>character.alive === this.state.filters.filterLife
-    )
-  
-    //  const filteredCharacters = filteredCharLife.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
+      character => character.alive === filters.filterLife
+    );
+    const filteredCharacters = filteredCharLife.filter(character => character.name.toUpperCase().includes(filters.filterName.toUpperCase()));
     if (isFetching) { return (<p>loading</p>) }
     else {
       return (
@@ -92,20 +109,20 @@ class App extends React.Component {
             exact path="/"
             render={() => (
               <Home
-                filter={filter}
+                filter={filters.filterName}
                 handleChange={this.handleChange}
-                filteredCharacters={filteredCharLife}
+                filteredCharacters={filteredCharacters}
                 handleChangeLife={this.handleChangeLife}
-                filterLife={this.state.filters.filterLife}
-               
-                 />
+                filterLife={filters.filterLife}
+
+              />
 
             )}
           />
           <Route
             path="/character/:name"
             render={(routerProps) => (
-              <CharacterDetail match={routerProps.match} characters={characters} />
+              <CharacterDetail match={routerProps.match} characters={characters} handleReset={this.handleReset} />
             )}
           />
         </Switch>

@@ -21,7 +21,7 @@ const { handleChangeLife,filterLife } = props;
                 value= {false}
                 id="dead"
                 name="life"
-                // checked = {filterLife===false}
+                 checked = {filterLife===false}
                 onChange = {handleChangeLife}
             />
             <label htmlFor="dead">dead</label>

@@ -7,8 +7,13 @@ import './styles.scss';
 import aliveIcon from '../../images/alive.ico';
 import deadIcon from '../../images/dead.ico';
 
-const CharacterDetail = props => {
-    const { characters, match } = props;
+class CharacterDetail extends React.Component{
+   
+    componentDidMount(){
+        console.log('El detail se ha montado');
+    }
+    render(){
+        const { characters, match,handleReset } = this.props;
     const urlName = match.params.name;
     const characterIndex = characters.findIndex(character => character.name === urlName);
     if (characterIndex === -1) {
@@ -40,14 +45,19 @@ const CharacterDetail = props => {
 
                         </div>
                         <div className="btn--back__container">
-                            <Link to="/" className="btn--back" >Back</Link>
+                            <Link 
+                            to="/" 
+                            className="btn--back"
+                            onClick ={handleReset} >Back</Link>
                         </div>
                     </div>
                 </div>
             </div>
         )
     }
+    }
 }
+
 
 CharacterDetail.propTypes = {
     characters: PropTypes.arrayOf(PropTypes.object),
