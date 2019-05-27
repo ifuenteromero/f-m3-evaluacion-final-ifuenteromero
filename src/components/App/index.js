@@ -13,10 +13,16 @@ class App extends React.Component {
     super(props);
     this.state = {
       characters: [],
-      filter: "",
+     
       isFetching: true,
+      filters :{
+        filterName : "",
+        filterLife : true
+      }
+      
     }
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeLife = this.handleChangeLife.bind(this);
   }
 
   componentDidMount() {
@@ -47,13 +53,37 @@ class App extends React.Component {
 
   handleChange(event) {
     this.setState({
-      filter: event.target.value
+      filterName: event.target.value
     })
+  }
+  handleChangeLife(event){
+    const nextFilterLife = event.currentTarget.value ==="true";
+    this.setState( prevState =>{
+   
+      return{
+        filters :{
+          ...prevState.filters,
+          filterLife : nextFilterLife
+        }
+      }
+
+    }
+      
+    //   {
+    //   filterLife:event.currentTarget.value==="true"
+    // }
+    
+    
+    )
   }
 
   render() {
     const { characters, filter, isFetching } = this.state;
-    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
+    const filteredCharLife = characters.filter(
+      character =>character.alive === this.state.filters.filterLife
+    )
+  
+    //  const filteredCharacters = filteredCharLife.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
     if (isFetching) { return (<p>loading</p>) }
     else {
       return (
@@ -61,8 +91,14 @@ class App extends React.Component {
           <Route
             exact path="/"
             render={() => (
-              <Home filter={filter} handleChange={this.handleChange}
-                filteredCharacters={filteredCharacters} />
+              <Home
+                filter={filter}
+                handleChange={this.handleChange}
+                filteredCharacters={filteredCharLife}
+                handleChangeLife={this.handleChangeLife}
+                filterLife={this.state.filters.filterLife}
+               
+                 />
 
             )}
           />
