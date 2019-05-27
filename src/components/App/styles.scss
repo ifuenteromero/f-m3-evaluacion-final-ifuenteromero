@@ -4,7 +4,15 @@ body{
     font-weight: 700;
     background-image: linear-gradient(to right ,#065a5c, #020e0c, #016269);
     color : white;
+    padding: 0;
+    margin: 0;
 }
+.page--characters{
+    width :100%;
+    height: 100%;
+    padding-bottom: 30px;
+}
+
 .main__title{
     text-align: center;
 }

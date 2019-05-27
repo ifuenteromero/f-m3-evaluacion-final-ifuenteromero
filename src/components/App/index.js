@@ -63,15 +63,18 @@ class App extends React.Component {
     else {
       return (
         <Fragment>
-          <header>
-            <h1 className="main__title">Harry Potter Characters</h1>
-          </header>
-          <main>
-            <Switch>
-              <Route
-                exact path="/"
-                render={() => (
-                  <Fragment>
+
+
+          <Switch>
+            <Route
+              exact path="/"
+              render={() => (
+             
+                  <div className="page--characters">
+                  <header>
+                    <h1 className="main__title">Harry Potter Characters</h1>
+                  </header>
+                  <main>
                     <Filter
                       handleChange={this.handleChange}
                       value={filter}
@@ -79,17 +82,18 @@ class App extends React.Component {
                     <CharacterList
                       characters={filteredCharacters}
                     />
-                  </Fragment>
-                )}
-              />
-              <Route
-                path="/character/:name"
-                render={(routerProps) => (
-                  <CharacterDetail match={routerProps.match} characters={characters} />
-                )}
-              />
-            </Switch>
-          </main>
+                  </main>
+                  </div>
+              )}
+            />
+            <Route
+              path="/character/:name"
+              render={(routerProps) => (
+                <CharacterDetail match={routerProps.match} characters={characters} />
+              )}
+            />
+          </Switch>
+
         </Fragment>
 
       );
