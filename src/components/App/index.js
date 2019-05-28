@@ -13,10 +13,15 @@ class App extends React.Component {
     super(props);
     this.state = {
       characters: [],
-      filter: "",
+      
       isFetching: true,
+      filters :{
+        filterName: "",
+        filterLife : ['alive','dead']
+      }
     }
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeLife = this.handleChangeLife.bind(this);
   }
 
   componentDidMount() {
@@ -34,7 +39,7 @@ class App extends React.Component {
             house: character.house,
             dob: character.yearOfBirth,
             patronus: character.patronus,
-            alive: character.alive
+            alive: character.alive ? 'alive' : 'dead'
           }
         });
 
@@ -46,14 +51,47 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({
-      filter: event.target.value
+    const nextValue = event.target.value;
+    this.setState(prevState=>{
+
+      return{
+        filters :{
+          ...prevState.filters,
+          filterName : nextValue
+        }
+      }
+
+    })
+  }
+
+  handleChangeLife(event){
+   const checkedValue = event.currentTarget.value;
+  
+    this.setState(prevState=>{
+     const checkedLifeValues = prevState.filters.filterLife;
+     let nextCheckedValues = [];
+
+     checkedLifeValues.includes(checkedValue) ? nextCheckedValues = checkedLifeValues.filter(item=> item !== checkedValue) : nextCheckedValues = prevState.filters.filterLife.concat(checkedValue);
+      
+      return{
+        filters :{
+          ...prevState.filters,
+          filterLife : nextCheckedValues
+        }
+      }
+
     })
   }
 
   render() {
-    const { characters, filter, isFetching } = this.state;
-    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
+    const { characters, filters, isFetching } = this.state;
+    const { filterName,filterLife }= filters;
+    const filteredLifeCharacters = characters.filter(
+      character=>filterLife.includes(character.alive)
+
+    )
+
+     const filteredCharacters = filteredLifeCharacters.filter(character => character.name.toUpperCase().includes(filterName.toUpperCase()));
     if (isFetching) { return (<p>loading</p>) }
     else {
       return (
@@ -61,8 +99,11 @@ class App extends React.Component {
           <Route
             exact path="/"
             render={() => (
-              <Home filter={filter} handleChange={this.handleChange}
-                filteredCharacters={filteredCharacters} />
+              <Home filter={filterName} handleChange={this.handleChange}
+                filteredCharacters={filteredCharacters}
+                handleChangeLife = {this.handleChangeLife}
+                filterLife = {filterLife}
+                />
 
             )}
           />

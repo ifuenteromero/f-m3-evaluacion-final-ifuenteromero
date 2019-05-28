@@ -2,11 +2,12 @@ import React from 'react';
 
 import Filter from '../Filter';
 import CharacterList from '../CharacterList';
+import FilterLife from '../FilterLife';
 
 import './styles.scss';
 
 const Home = props => {
-    const { handleChange, filter, filteredCharacters } = props;
+    const { handleChange, filter, filteredCharacters,handleChangeLife,filterLife } = props;
     return (
         <div className="page--characters">
             <header>
@@ -16,6 +17,10 @@ const Home = props => {
                 <Filter
                     handleChange={handleChange}
                     value={filter}
+                />
+                <FilterLife 
+                handleChangeLife = {handleChangeLife}
+                filterLife = {filterLife}
                 />
                 <CharacterList
                     characters={filteredCharacters}
