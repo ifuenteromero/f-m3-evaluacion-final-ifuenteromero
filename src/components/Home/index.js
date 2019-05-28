@@ -3,11 +3,12 @@ import React from 'react';
 import Filter from '../Filter';
 import CharacterList from '../CharacterList';
 import FilterLife from '../FilterLife';
+import FilterHome from '../FilterHome';
 
 import './styles.scss';
 
 const Home = props => {
-    const { handleChange, filter, filteredCharacters,handleChangeLife,filterLife } = props;
+    const { handleChange, filter, filteredCharacters,handleChangeLife,filterLife,handleChangeHome,filterHome } = props;
     const results = filteredCharacters.length;
     return (
         <div className="page--characters">
@@ -21,6 +22,10 @@ const Home = props => {
                 />
                 <FilterLife handleChangeLife={handleChangeLife} filterLife={filterLife}/>
                 <p>{results}</p>
+                <FilterHome 
+                handleChangeHome={handleChangeHome}
+                filterHome = {filterHome}
+                />
                 <CharacterList
                     characters={filteredCharacters}
                 />

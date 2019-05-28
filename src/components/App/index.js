@@ -1,12 +1,14 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route,Link } from 'react-router-dom';
 
 import queryApi from '../../services/characters-service';
 
 import Home from '../Home';
 import CharacterDetail from '../CharacterDetail';
 
+
 import './styles.scss';
+import CharacterList from '../CharacterList';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,13 +19,15 @@ class App extends React.Component {
       isFetching: true,
       filters: {
         filterName: "",
-        filterLife: true
+        filterLife: true,
+        filterHome :["Gryffindor","Slytherin","Ravenclaw","Hufflepuff"]
       }
 
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeLife = this.handleChangeLife.bind(this);
     this.handleReset=this.handleReset.bind(this);
+    this.handleChangeHome=this.handleChangeHome.bind(this);
   }
 
   componentDidMount() {
@@ -39,7 +43,7 @@ class App extends React.Component {
             id: index + 1,
             name: character.name,
             image: character.image,
-            house: character.house,
+            house: character.house||'Homeless',
             dob: character.yearOfBirth,
             patronus: character.patronus,
             alive: character.alive
@@ -86,18 +90,42 @@ class App extends React.Component {
 
     )
   }
+
+  handleChangeHome(event){
+    const currentValue = event.currentTarget.value;
+    console.log(currentValue);
+    this.setState(prevState=>{
+      const currentArray = prevState.filters.filterHome;
+         
+      return{
+        filters : {
+          ...prevState.filters,
+          filterHome : currentArray.includes(currentValue)?currentArray.filter(item=>item!==currentValue) : currentArray.concat(currentValue)
+        }
+      }
+    
+    }) 
+  
+  }
   handleReset(){
     this.setState({
       filters: {
         filterName: "",
-        filterLife: true
+        filterLife: true,
+        filterHome :["Gryffindor","Slytherin","Ravenclaw","Hufflepuff"]
       }
     })
   }
 
   render() {
     const { characters, filters, isFetching } = this.state;
-    const filteredCharLife = characters.filter(
+    const filteredCharHome = characters.filter(
+      character => filters.filterHome.includes(character.house)
+    );
+    const filteredGryf = characters.filter(
+      character => character.house ==="Gryffindor"
+          );
+    const filteredCharLife = filteredCharHome.filter(
       character => character.alive === filters.filterLife
     );
     const filteredCharacters = filteredCharLife.filter(character => character.name.toUpperCase().includes(filters.filterName.toUpperCase()));
@@ -114,10 +142,23 @@ class App extends React.Component {
                 filteredCharacters={filteredCharacters}
                 handleChangeLife={this.handleChangeLife}
                 filterLife={filters.filterLife}
+                handleChangeHome={this.handleChangeHome}
+                filterHome = {filters.filterHome}
 
               />
 
             )}
+          />
+          <Route 
+          path ="/Gryffindor"
+          render = {
+            ()=>(
+              <React.Fragment>
+              <CharacterList  characters={filteredGryf}  />
+              <Link to="/"> >Back </Link>
+              </React.Fragment>
+            )
+          }
           />
           <Route
             path="/character/:name"
