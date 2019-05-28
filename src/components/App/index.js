@@ -13,10 +13,15 @@ class App extends React.Component {
     super(props);
     this.state = {
       characters: [],
-      filter: "",
+      
       isFetching: true,
+      filters :{
+        filter: "",
+        filterLife :[]
+      }
     }
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeLife = this.handleChangeLife.bind(this);
   }
 
   componentDidMount() {
@@ -34,7 +39,7 @@ class App extends React.Component {
             house: character.house,
             dob: character.yearOfBirth,
             patronus: character.patronus,
-            alive: character.alive
+            alive: character.alive ? 'alive' :'dead'
           }
         });
 
@@ -46,14 +51,39 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({
-      filter: event.target.value
+    this.setState(prevState=>{
+      return{
+        ...prevState.filters,
+                  filter: event.target.value
+        
+      }
+
+    })
+  }
+
+  handleChangeLife(event){
+    const currentLife = event.currentTarget.value;
+  
+    this.setState(prevState=>{
+      const filterLife = prevState.filters.filterLife;
+     
+      return{
+        ...prevState.filters,
+       
+          filterLife : filterLife.includes(currentLife)?filterLife.filter(
+            item=>item!==currentLife
+          ):filterLife.concat(currentLife)
+       
+      }
     })
   }
 
   render() {
-    const { characters, filter, isFetching } = this.state;
-    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
+    const { characters, filter, isFetching ,filters } = this.state;
+    const filteredCharLife = characters.filter(
+      character => filters.filterLife.includes(character.alive)
+    )
+    //  const filteredCharacters = filteredCharLife.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
     if (isFetching) { return (<p>loading</p>) }
     else {
       return (
@@ -61,8 +91,12 @@ class App extends React.Component {
           <Route
             exact path="/"
             render={() => (
-              <Home filter={filter} handleChange={this.handleChange}
-                filteredCharacters={filteredCharacters} />
+              <Home
+                filter={filter}
+                handleChange={this.handleChange}
+                filteredCharacters={filteredCharLife}
+                handleChangeLife={this.handleChangeLife}
+                filterLife={this.state.filters.filterLife} />
 
             )}
           />
