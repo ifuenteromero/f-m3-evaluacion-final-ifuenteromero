@@ -13,7 +13,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       characters: [],
-      filter: "",
+      filters :{
+        filterName : "",
+        filterActor:""
+      },
       isFetching: true,
     }
     this.handleChange = this.handleChange.bind(this);
@@ -34,7 +37,8 @@ class App extends React.Component {
             house: character.house,
             dob: character.yearOfBirth,
             patronus: character.patronus,
-            alive: character.alive
+            alive: character.alive,
+            actor : character.actor
           }
         });
 
@@ -46,14 +50,24 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({
-      filter: event.target.value
+    const value = event.currentTarget.value;
+    const key = event.currentTarget.getAttribute('id');
+    this.setState(prevState=>{
+      return{
+        filters :{
+          ...prevState.filters,
+          [key] : value
+        }
+      }
     })
   }
 
   render() {
-    const { characters, filter, isFetching } = this.state;
-    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
+    const { characters, filters, isFetching } = this.state;
+    const filterdActors = characters.filter(
+      character => character.actor.includes(filters.filterActor)
+    )
+    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filters.filterName.toUpperCase()));
     if (isFetching) { return (<p>loading</p>) }
     else {
       return (
@@ -61,8 +75,9 @@ class App extends React.Component {
           <Route
             exact path="/"
             render={() => (
-              <Home filter={filter} handleChange={this.handleChange}
-                filteredCharacters={filteredCharacters} />
+              <Home filterName={filters.filterName} handleChange={this.handleChange}
+                filteredCharacters={filterdActors}
+                filterActor={filters.filterActor} />
 
             )}
           />
