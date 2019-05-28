@@ -4,17 +4,18 @@ import PropTypes from 'prop-types';
 import './styles.scss';
 
 const Filter = props => {
-    const {handleChange, value } = props; 
+    const {handleChange, data } = props; 
+    const {  value,id,placeholder} = data
     return (
         <div className="filter__container">
             <label htmlFor="name"></label>
             <input 
                 type = "text"
-                id = "name"
+                id = {id}
                 value = {value}
-                name = "name"
+                name = {id}
                 onChange = {handleChange}
-                placeholder="Look for a character"
+                placeholder={placeholder}
                 className = "filter__input"
                 />
         </div>
