@@ -13,7 +13,10 @@ class App extends React.Component {
     super(props);
     this.state = {
       characters: [],
-      filter: "",
+      filters: {
+        filterName :"",
+        filterDob : null
+      },
       isFetching: true,
     }
     this.handleChange = this.handleChange.bind(this);
@@ -46,14 +49,24 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({
-      filter: event.target.value
+    const value = event.currentTarget.value;
+    const key = event.currentTarget.getAttribute('id');
+    this.setState(prevState=>{
+      return{
+        filters :{
+          ...prevState.filters,
+          [key] : value
+        }
+      }
     })
   }
 
   render() {
-    const { characters, filter, isFetching } = this.state;
-    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filter.toUpperCase()));
+    const { characters, filters, isFetching } = this.state;
+    const filteredDob = characters.filter(
+      character=> character.dob > filters.filterDob
+    )
+    const filteredCharacters = characters.filter(character => character.name.toUpperCase().includes(filters.filterName.toUpperCase()));
     if (isFetching) { return (<p>loading</p>) }
     else {
       return (
@@ -61,8 +74,8 @@ class App extends React.Component {
           <Route
             exact path="/"
             render={() => (
-              <Home filter={filter} handleChange={this.handleChange}
-                filteredCharacters={filteredCharacters} />
+              <Home filters={filters} handleChange={this.handleChange}
+                filteredCharacters={filteredDob} />
 
             )}
           />

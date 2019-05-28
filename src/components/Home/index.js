@@ -6,7 +6,8 @@ import CharacterList from '../CharacterList';
 import './styles.scss';
 
 const Home = props => {
-    const { handleChange, filter, filteredCharacters } = props;
+    const { handleChange, filters, filteredCharacters } = props;
+    const {filterName, filterDob } = filters;
     return (
         <div className="page--characters">
             <header>
@@ -15,7 +16,21 @@ const Home = props => {
             <main>
                 <Filter
                     handleChange={handleChange}
-                    value={filter}
+                    data={
+                       { value : filterName,
+                        type : "text",
+                        id : "filterName",
+                        placeholder : "Search for a character"}
+                    }
+                />
+                  <Filter
+                    handleChange={handleChange}
+                    data={
+                       { value : filterDob,
+                        type : "number",
+                        id : "filterDob",
+                        placeholder : "Search for a dob"}
+                    }
                 />
                 <CharacterList
                     characters={filteredCharacters}
